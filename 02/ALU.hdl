@@ -1,0 +1,138 @@
+// This file is part of www.nand2tetris.org
+// and the book "The Elements of Computing Systems"
+// by Nisan and Schocken, MIT Press.
+// File name: projects/02/ALU.hdl
+
+/**
+ * The ALU (Arithmetic Logic Unit).
+ * Computes one of the following functions:
+ * x+y, x-y, y-x, 0, 1, -1, x, y, -x, -y, !x, !y,
+ * x+1, y+1, x-1, y-1, x&y, x|y on two 16-bit inputs, 
+ * according to 6 input bits denoted zx,nx,zy,ny,f,no.
+ * In addition, the ALU computes two 1-bit outputs:
+ * if the ALU output == 0, zr is set to 1; otherwise zr is set to 0;
+ * if the ALU output < 0, ng is set to 1; otherwise ng is set to 0.
+ */
+
+// Implementation: the ALU logic manipulates the x and y inputs
+// and operates on the resulting values, as follows:
+// if (zx == 1) set x = 0        // 16-bit constant
+// if (nx == 1) set x = !x       // bitwise not
+// if (zy == 1) set y = 0        // 16-bit constant
+// if (ny == 1) set y = !y       // bitwise not
+// if (f == 1)  set out = x + y  // integer 2's complement addition
+// if (f == 0)  set out = x & y  // bitwise and
+// if (no == 1) set out = !out   // bitwise not
+// if (out == 0) set zr = 1
+// if (out < 0) set ng = 1
+
+/* CHIP Neg16 { */
+/*     IN in[16]; */
+/*     OUT out[16]; */
+
+/*     PARTS: */
+/*         Not16(in=in,out=nin); */
+/*         Inc16(in=nin,out=out); */
+/* } */
+
+/* CHIP 1To16 { */
+/*     IN in; */
+/*     OUT out[16]; */
+
+/*     PARTS: */
+/*         Neg16(in[0]=in,out=out); */
+/* } */
+
+/* CHIP Or16Way { */
+/*     IN in[16]; */
+/*     OUT out; */
+
+/*     PARTS: */
+/*         Or8Way(in=in[0..7], out=o1); */
+/*         Or8Way(in=in[8..15], out=o2); */
+/*         Or(a=o1, b=o2, out=out); */
+/* } */
+
+CHIP ALU {
+    IN  
+        x[16], y[16],  // 16-bit inputs        
+        zx, // zero the x input?
+        nx, // negate the x input?
+        zy, // zero the y input?
+        ny, // negate the y input?
+        f,  // compute out = x + y (if 1) or x & y (if 0)
+        no; // negate the out output?
+
+    OUT 
+        out[16], // 16-bit output
+        zr, // 1 if (out == 0), 0 otherwise
+        ng; // 1 if (out < 0),  0 otherwise
+
+    PARTS:
+        /* === ZEROING IF NEEDED === */
+        /* Not16(in=zx,out=nzx); */
+        /* 1To16(in=nzx,out=nzx16); */
+        /* And16(a=x, b=nzx16, out=x1); */
+
+        /* Not16(in=zy,out=nzy); */
+        /* 1To16(in=nzy,out=nzy16); */
+        /* And16(a=y, b=nzy16, out=y1); */
+
+        Mux16(a=x, b[0]=false, sel=zx, out=x1);
+        Mux16(a=y, b[0]=false, sel=zy, out=y1);
+
+        /* === -> (x1, y1) === */
+
+        /* === NOT X,Y IF NEEDED === */
+
+        /* Neg16(in=nx,out=nx16); */
+        /* Xor16(a=nx16, b=x1, out=x2); */
+
+        /* Neg16(in=ny,out=ny16); */
+        /* Xor16(a=ny16, b=y1, out=y2); */
+
+        Not16(in=x1, out=notX);
+        Mux16(a=x1, b=notX, sel=nx, out=x2);
+
+        Not16(in=y1, out=notY);
+        Mux16(a=y1, b=notY, sel=ny, out=y2);
+        /* === -> (x2, y2) === */
+
+        /* === OPERATION CHOOSING (F) === */
+
+        And16(a=x2, b=y2, out=andXY);
+        Add16(a=x2, b=y2, out=addXY);
+
+        /* Not(in=f, out=nf); */
+        /* Neg16(in=f, out=f16); */
+        /* Neg16(in=nf, out=nf16); */
+
+        /* And16(a=andXY, b=nf16, out=or1); */
+        /* And16(a=addXY, b=f16, out=or2); */
+        /* Or16(a=or1, b=or2, out=out1); */
+
+        Mux16(a=andXY, b=addXY, sel=f, out=out1);
+        /* === -> (out1) === */
+
+        /* === NOT OUT IF NEEDED === */
+
+        /* Neg16(in=no,out=no16); */
+        /* Xor16(a=no16, b=out1, out=out); */
+        Not16(in=out1, out=notOUT);
+        Mux16(a=out1, b=notOUT, sel=no, out=out2, out[15]=ng);
+        /* === -> (out2) === */
+
+        /* === IS OUT NEGATIVE === */
+        /* Or(a=out2[0], b=false, out=ng); */
+        /* out2[0]=ng; */
+        /* === -> (ng) === */
+
+        /* === IS OUT ZERO === */
+        Or16Way(in=out2, out=nzr);
+        Not(in=nzr, out=zr);
+        /* === -> (zr) === */
+
+        /* === RES OUT === */
+        Or16(a=out2, b=false, out=out);
+        /* === out2 -> out === */
+}
