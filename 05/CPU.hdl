@@ -40,10 +40,16 @@ CHIP CPU {
 
     PARTS:
         /* Operation code (0 - A, 1 - C) */
-        Or(a=instruction[15], b=false, out=oc);
-        Not(in=oc, out=notOC);
+        /* Or(a=instruction[15], b=false, out=oc); */
+        Not(in=instruction[15], out=notOC);
+        Not(in=notOC, out=oc);
+
         /* a */
-        Or(a=instruction[12], b=false, out=a);
+        /* Or(a=instruction[12], b=false, out=a); */
+        /* Not(in=a, out=notA); */
+        Not(in=instruction[12], out=notA);
+        Not(in=notA, out=a);
+
         /* destination bits */
         Or(a=instruction[5], b=false, out=destA);
         Or(a=instruction[4], b=false, out=destD);
@@ -52,36 +58,35 @@ CHIP CPU {
         Or(a=instruction[11], b=false, out=c1);
         Or(a=instruction[10], b=false, out=c2);
         Or(a=instruction[9], b=false, out=c3);
-        Or(a=instruction[7], b=false, out=c4);
-        Or(a=instruction[6], b=false, out=c5);
-        Or(a=instruction[5], b=false, out=c6);
+        Or(a=instruction[8], b=false, out=c4);
+        Or(a=instruction[7], b=false, out=c5);
+        Or(a=instruction[6], b=false, out=c6);
 
         /* JMP bits */
         Or(a=instruction[2], b=false, out=j1);
         Or(a=instruction[1], b=false, out=j2);
-        Or(a=instruction[3], b=false, out=j3);
+        Or(a=instruction[0], b=false, out=j3);
 
         /* Register(in=, load=, out=); */
 
         /* A register */
-        Mux16(a=outALU, b=instruction, sel=notOC, out=inA);
-        Register(in=inA, load=destA, out=outA, out=addressM);
+        Mux16(a=instruction, b=outALU, sel=oc, out=inA);
+        Or(a=destA, b=notOC, out=loadA);
+        ARegister(in=inA, load=loadA, out=outA, out[0..14]=addressM);
 
         /* D register */
-        Register(in=outALU, load=destD, out=outD);
+        And(a=destD, b=oc, out=loadD);
+        DRegister(in=outALU, load=loadD, out=outD);
 
-        Not(in=a, out=notA);
-
-
-        Nand16(a=notA, b=oc, out=selAM);
+        /* ALU related */
+        And(a=a, b=oc, out=selAM);
         Mux16(a=outA, b=inM, sel=selAM, out=aluY);
 
-        ALU(x=outD, y=aluY, zx=c1, nx=c2, zy=c3, ny=c4, f=c5, no=c6, out=outALU, zr=zrALU, ng=ngALU);
+        ALU(x=outD, y=aluY, zx=c1, nx=c2, zy=c3, ny=c4, f=c5, no=c6, out=outALU, out=outM, zr=zrALU, ng=ngALU);
+        And(a=oc, b=destM, out=writeM);
 
-        Or(a=j1, b=j2, out=or1);
-        Or(a=or1, b=j3, out=or2);
-        Not(in=or2, out=incPC);
-
-        PC(in=outALU, load=//JMPhandle, inc=incPC, reset=reset, out[0..14]=pc)
+        /* Program counter */
+        JMPhandle(oc=oc, j1=j1, j2=j2, j3=j3, zr=zrALU, ng=ngALU, load=pcLOAD, inc=pcINC);
+        PC(in=outA, load=pcLOAD, inc=pcINC, reset=reset, out[0..14]=pc);
 
 }

@@ -1,0 +1,45 @@
+
+
+CHIP JMPhandle {
+    IN oc, j1, j2, j3, zr, ng;
+    OUT load, inc;
+
+
+    PARTS:
+        Not(in=oc, out=notOC);
+        Not(in=j1, out=notJ1);
+        Not(in=j2, out=notJ2);
+        Not(in=j3, out=notJ3);
+        Not(in=ng, out=notNG);
+        Not(in=zr, out=notZR);
+
+        /* JJJ 1 2 3  zr ng
+        /* JGT 0 0 1; 0  0 */
+        And4Way(in[0]=notJ1,    in[1]=notJ2,    in[2]=j3,       in[3]=notNG,    out=and01);
+        And(a=and01, b=notZR, out=and1);
+
+        /* JEQ 0 1 0; 1  - */
+        And4Way(in[0]=notJ1,    in[1]=j2,       in[2]=notJ3,    in[3]=zr,       out=and2);
+
+        /* JGE 0 1 1; -  0 */
+        And4Way(in[0]=notJ1,    in[1]=j2,       in[2]=j3,       in[3]=notNG,    out=and3);
+
+        /* JLT 1 0 0; -  1 */
+        And4Way(in[0]=j1,       in[1]=notJ2,    in[2]=notJ3,    in[3]=ng,       out=and4);
+
+        /* JNE 1 0 1; 0  - */
+        And4Way(in[0]=j1,       in[1]=notJ2,    in[2]=j3,       in[3]=notZR,    out=and5);
+
+        /* JLE 1 1 0; -le- */
+        Xor(a=zr, b=ng, out=le);
+        And4Way(in[0]=j1,       in[1]=j2,       in[2]=notJ3,    in[3]=le,       out=and6);
+
+        /* JMP 1 1 1; -  - */
+        And4Way(in[0]=j1,       in[1]=j2,       in[2]=j3,       in[3]=true,     out=and7);
+
+        /* load */
+        Or8Way(in[0]=and1, in[1]=and2, in[2]=and3, in[3]=and4, in[4]=and5, in[5]=and6, in[6]=and7, in[7]=false, out=isJMP);
+        And(a=isJMP, b=oc, out=load, out=loadd);
+
+        Not(in=loadd, out=inc);
+}

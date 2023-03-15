@@ -1,0 +1,11 @@
+
+CHIP And4Way {
+    IN in[4];
+    OUT out;
+
+    PARTS:
+        And(a=in[0], b=in[1], out=and1);
+        And(a=in[2], b=in[3], out=and2);
+
+        And(a=and1, b=and2, out=out);
+}
