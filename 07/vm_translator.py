@@ -146,10 +146,8 @@ def pop_to_asm(segment_type: str, i: int) -> list[str]:
 
 
 def arithmetic_to_asm(line: str) -> list[str]:
-    asm_lines: list[str]
-
-    if line in [ArithmeticType.ADD.value, ArithmeticType.SUB.value]:
-        asm_lines = [
+    def top2_operation(operation: str = "D+M") -> list[str]:
+        return [
             *decr_var("SP"),
             *stack_top_toD(),
             "@temp",
@@ -157,21 +155,99 @@ def arithmetic_to_asm(line: str) -> list[str]:
             *decr_var("SP"),
             *stack_top_toD(),
             "@temp",  # A = &temp1, M = temp1
-            "D=D+M" if line == ArithmeticType.ADD.value else "D=D-M",
+            f"D={operation}",
             *D_to_stack_top(),
             *inc_var("SP"),
         ]
-    elif line == ArithmeticType.NEG.value:
-        asm_lines = [
+
+    def top1_operation(operation: str = "-D") -> list[str]:
+        return [
             *decr_var("SP"),
             *stack_top_toD(),
-            "D=-D",
+            f"D={operation}",
             *D_to_stack_top(),
             *inc_var("SP"),
         ]
+
+    asm_lines: list[str]
+
+    if line in [ArithmeticType.ADD.value, ArithmeticType.SUB.value]:
+        return top2_operation(operation="D+M")
+    elif line == ArithmeticType.NEG.value:
+        asm_lines = top1_operation(operation="-D")
+    elif line == ArithmeticType.NOT.value:
+        asm_lines = top1_operation(operation="!D")
+    elif line == ArithmeticType.EQUALS.value:
+        asm_lines = [
+            *top2_operation(operation="D-M"),
+            *decr_var("SP"),
+            *stack_top_toD(),
+            # *D_to_stack_top(),
+            "@EQ",
+            "D;JEQ",
+
+            "D=0",
+            "@ENDIF1",
+            "0;JMP",
+
+            "(EQ)",
+            "D=1",
+
+            "(ENDIF1)",
+            *D_to_stack_top(),
+            *inc_var("SP"),
+        ]
+    elif line == ArithmeticType.GREATER.value:
+        asm_lines = [
+            *top2_operation(operation="D-M"),
+            *decr_var("SP"),
+            *stack_top_toD(),
+            # *D_to_stack_top(),
+            "@GT",
+            "D;JGT",
+
+            "D=0",
+            "@ENDIF2",
+            "0;JMP",
+
+            "(GT)",
+            "D=1",
+
+            "(ENDIF2)",
+            *D_to_stack_top(),
+            *inc_var("SP"),
+        ]
+    elif line == ArithmeticType.LESS.value:
+        asm_lines = [
+            *top2_operation(operation="D-M"),
+            *decr_var("SP"),
+            *stack_top_toD(),
+            # *D_to_stack_top(),
+            "@LT",
+            "D;JLT",
+
+            "D=0",
+            "@ENDIF3",
+            "0;JMP",
+
+            "(LT)",
+            "D=1",
+
+            "(ENDIF3)",
+            *D_to_stack_top(),
+            *inc_var("SP"),
+        ]
+    elif line == ArithmeticType.AND.value:
+        asm_lines = [
+            *top2_operation(operation="D&M")
+        ]
+    elif line == ArithmeticType.OR.value:
+        asm_lines = [
+            *top2_operation(operation="D|M")
+        ]
     else:
-        # raise Exception(f"Unknown arithmetic operation: {line}")
-        return []
+        raise Exception(f"Unknown arithmetic operation: {line}")
+        # return []
 
     return asm_lines
 
@@ -216,6 +292,6 @@ def main(vm_filename: str):
 
 
 if __name__ == '__main__':
-    # VM_FILENAME = "./MemoryAccess/BasicTest/BasicTest.vm"
-    VM_FILENAME = "./myTest.vm"
+    VM_FILENAME = "./MemoryAccess/BasicTest/BasicTest.vm"
+    # VM_FILENAME = "./myTest.vm"
     main(VM_FILENAME)
