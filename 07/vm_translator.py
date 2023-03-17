@@ -27,7 +27,7 @@ class ArithmeticType(MyEnum):
 
 def D_to_stack_top() -> list[str]:
     """
-    *SP = D{val}
+    *SP = D
     """
     return [
         "@SP",
@@ -69,9 +69,9 @@ def decr_var(name: str = "SP") -> list[str]:
     ]
 
 
-def segment_i_to_D(segment_type: str, i: int) -> list[str]:
+def push_to_asm(segment_type: str, i: int) -> list[str]:
     """
-    M = value in segment
+    D = value in segment
     """
 
     seg_ptr_addr_mapping = {
@@ -80,6 +80,7 @@ def segment_i_to_D(segment_type: str, i: int) -> list[str]:
         "this": "THIS",
         "that": "THAT",
         "temp": 5,
+        "pointer": 3,
     }
 
     asm_lines: list[str] = []
@@ -89,16 +90,15 @@ def segment_i_to_D(segment_type: str, i: int) -> list[str]:
             # *SP=17
             f"@{i}",
             "D=A",
+            *D_to_stack_top(),
+            *inc_var("SP"),
         ]
     elif segment_type == "static":
         asm_lines.extend([
             f"@Foo.{i}",  # A = Foo.5{addr}, M = Foo.5{val}
             "D=M",
-        ])
-    elif segment_type == "pointer":
-        asm_lines.extend([
-            f"@{'THIS' if i == 0 else 'THAT'}",  # A = THAT{addr}, M = THAT{val}
-            "D=M",
+            *D_to_stack_top(),
+            *inc_var("SP"),
         ])
     elif segment_type in seg_ptr_addr_mapping:
         ptr_addr = seg_ptr_addr_mapping[segment_type]
@@ -109,13 +109,10 @@ def segment_i_to_D(segment_type: str, i: int) -> list[str]:
             f"@{ptr_addr}",  # A = LCL{addr} (1), M = LCL{val}
             "D=M",  # D = *LCL (10)
             f"@{i}",  # A = i (2)
-            "D=D+A",  # D = D + A (10 + 2 = 12)
-            "@addr",  # A -> addr, M = addr{val} (new var)
-            "M=D",  # addr = 12
-            "A=M",  # A = addr{val}, M = *addr // (A = 12, M = 15)
-            # *SP = *addr
-            # "M=D",  # D = 15, M = ..
+            "A=D+A",  # D = D + A (10 + 2 = 12)
             "D=M",
+            *D_to_stack_top(),
+            *inc_var("SP"),
         ]
     else:
         raise Exception(f"Unhandled segment type: {segment_type}")
@@ -123,26 +120,47 @@ def segment_i_to_D(segment_type: str, i: int) -> list[str]:
     return asm_lines
 
 
-def push_to_asm(segment_type: str, i: int) -> list[str]:
-    """
-    SP++, *SP=val
-    """
-
-    return [
-        *segment_i_to_D(segment_type, i),
-        # "D=M",
-        *D_to_stack_top(),
-        *inc_var("SP"),
-    ]
-
-
 def pop_to_asm(segment_type: str, i: int) -> list[str]:
-    return [
-        *decr_var("SP"),
-        *segment_i_to_D(segment_type, i),
-        # "M=D",
-        *stack_top_toD(),
-    ]
+    seg_ptr_addr_mapping = {
+        "local": "LCL",
+        "argument": "ARG",
+        "this": "THIS",
+        "that": "THAT",
+        "temp": 5,
+        "pointer": 3,
+    }
+
+    if segment_type == "static":
+        return [
+            *decr_var("SP"),
+            *stack_top_toD(),
+            f"@Foo.{i}",  # A = Foo.5{addr}, M = Foo.5{val}
+            "M=D",
+        ]
+    elif segment_type in seg_ptr_addr_mapping:
+        ptr_addr = seg_ptr_addr_mapping[segment_type]
+
+        return [
+            # addr = LCL+i; *SP = *addr; SP++;
+            # addr = *LCL + 2
+
+            f"@{ptr_addr}",  # A = LCL{addr} (1), M = LCL{val}
+            "D=M",  # D = *LCL (10)
+            f"@{i}",  # A = i (2)
+            "D=D+A",  # D = D + A (10 + 2 = 12)
+            "@R13",  # A -> addr, M = addr{val} (new var)
+            "M=D",  # R13 = 12
+
+            *decr_var("SP"),
+            *stack_top_toD(),
+
+            "@R13",
+            "A=M",
+            "M=D",
+
+        ]
+    else:
+        raise Exception(f"Unhandled segment type: {segment_type}")
 
 
 def arithmetic_to_asm(line: str) -> list[str]:
@@ -293,5 +311,6 @@ def main(vm_filename: str):
 
 if __name__ == '__main__':
     VM_FILENAME = "./MemoryAccess/BasicTest/BasicTest.vm"
+    # VM_FILENAME = "./MemoryAccess/PointerTest/PointerTest.vm"
     # VM_FILENAME = "./myTest.vm"
     main(VM_FILENAME)
