@@ -2,6 +2,17 @@ import enum
 import re
 from typing import Type
 
+seg_ptr_addr_mapping = {
+    "local": "LCL",
+    "argument": "ARG",
+    "this": "THIS",
+    "that": "THAT",
+    "temp": 5,
+    "pointer": 3,
+}
+
+labels_cnt = 0
+
 
 class MyEnum(enum.Enum):
     @classmethod
@@ -25,47 +36,20 @@ class ArithmeticType(MyEnum):
     NOT = "not"
 
 
-def D_to_stack_top() -> list[str]:
-    """
-    *SP = D
-    """
+def push_d() -> list[str]:
     return [
         "@SP",
-        "A=M",
+        "AM=M+1",
+        "A=A-1",
         "M=D",
     ]
 
 
-def stack_top_toD() -> list[str]:
-    """
-    D{val} = *SP
-    """
+def pop_to_d():
     return [
         "@SP",
-        "A=M",
+        "AM=M-1",
         "D=M",
-    ]
-
-
-def inc_var(name: str = "SP") -> list[str]:
-    """
-    name++;
-    """
-    return [
-        f"@{name}",
-        "D=M",
-        "M=D+1",
-    ]
-
-
-def decr_var(name: str = "SP") -> list[str]:
-    """
-    name--;
-    """
-    return [
-        f"@{name}",
-        "D=M",
-        "M=D-1",
     ]
 
 
@@ -74,66 +58,43 @@ def push_to_asm(segment_type: str, i: int) -> list[str]:
     D = value in segment
     """
 
-    seg_ptr_addr_mapping = {
-        "local": "LCL",
-        "argument": "ARG",
-        "this": "THIS",
-        "that": "THAT",
-        "temp": 5,
-        "pointer": 3,
-    }
-
-    asm_lines: list[str] = []
-
     if segment_type == "constant":
-        asm_lines = [
+        return [
             # *SP=17
             f"@{i}",
             "D=A",
-            *D_to_stack_top(),
-            *inc_var("SP"),
+            *push_d(),
         ]
     elif segment_type == "static":
-        asm_lines.extend([
+        return [
             f"@Foo.{i}",  # A = Foo.5{addr}, M = Foo.5{val}
             "D=M",
-            *D_to_stack_top(),
-            *inc_var("SP"),
-        ])
+            # *D_to_stack_top(),
+            # *inc_var("SP"),
+            *push_d(),
+        ]
     elif segment_type in seg_ptr_addr_mapping:
         ptr_addr = seg_ptr_addr_mapping[segment_type]
 
-        asm_lines = [
+        return [
             # addr = LCL+i; *SP = *addr; SP++;
             # addr = *LCL + 2
-            f"@{ptr_addr}",  # A = LCL{addr} (1), M = LCL{val}
-            "D=M",  # D = *LCL (10)
             f"@{i}",  # A = i (2)
-            "A=D+A",  # D = D + A (10 + 2 = 12)
+            "D=A",
+            # "D=M" if isinstance(ptr_addr, str) else "D=A",  # D = *LCL (10)
+            f"@{ptr_addr}",  # A = LCL{addr} (1), M = LCL{val}
+            *(["A=M", "A=D+A"] if isinstance(ptr_addr, str) else ["A=D+A"]),  # D = D + A (10 + 2 = 12)
             "D=M",
-            *D_to_stack_top(),
-            *inc_var("SP"),
+            *push_d(),
         ]
     else:
         raise Exception(f"Unhandled segment type: {segment_type}")
 
-    return asm_lines
-
 
 def pop_to_asm(segment_type: str, i: int) -> list[str]:
-    seg_ptr_addr_mapping = {
-        "local": "LCL",
-        "argument": "ARG",
-        "this": "THIS",
-        "that": "THAT",
-        "temp": 5,
-        "pointer": 3,
-    }
-
     if segment_type == "static":
         return [
-            *decr_var("SP"),
-            *stack_top_toD(),
+            *pop_to_d(),
             f"@Foo.{i}",  # A = Foo.5{addr}, M = Foo.5{val}
             "M=D",
         ]
@@ -144,116 +105,95 @@ def pop_to_asm(segment_type: str, i: int) -> list[str]:
             # addr = LCL+i; *SP = *addr; SP++;
             # addr = *LCL + 2
 
-            f"@{ptr_addr}",  # A = LCL{addr} (1), M = LCL{val}
-            "D=M",  # D = *LCL (10)
             f"@{i}",  # A = i (2)
-            "D=D+A",  # D = D + A (10 + 2 = 12)
+            "D=A",
+            # "D=M" if isinstance(ptr_addr, str) else "D=A",  # D = *LCL (10)
+            f"@{ptr_addr}",  # A = LCL{addr} (1), M = LCL{val}
+            *(["A=M", "D=D+A"] if isinstance(ptr_addr, str) else ["D=D+A"]),  # D = D + A (10 + 2 = 12)
             "@R13",  # A -> addr, M = addr{val} (new var)
             "M=D",  # R13 = 12
 
-            *decr_var("SP"),
-            *stack_top_toD(),
+            *pop_to_d(),
 
             "@R13",
             "A=M",
             "M=D",
-
         ]
     else:
         raise Exception(f"Unhandled segment type: {segment_type}")
 
 
 def arithmetic_to_asm(line: str) -> list[str]:
+    global labels_cnt
+
     def top2_operation(operation: str = "D+M") -> list[str]:
         return [
-            *decr_var("SP"),
-            *stack_top_toD(),
-            "@temp",
+            # *decr_var("SP"),
+            # *stack_top_toD(),
+            *pop_to_d(),
+            "@R13",
             "M=D",  # temp1 = *SP
-            *decr_var("SP"),
-            *stack_top_toD(),
-            "@temp",  # A = &temp1, M = temp1
+            # *decr_var("SP"),
+            # *stack_top_toD(),
+            *pop_to_d(),
+            "@R13",  # A = &temp1, M = temp1
             f"D={operation}",
-            *D_to_stack_top(),
-            *inc_var("SP"),
+            # *D_to_stack_top(),
+            # *inc_var("SP"),
+            *push_d(),
         ]
 
     def top1_operation(operation: str = "-D") -> list[str]:
         return [
-            *decr_var("SP"),
-            *stack_top_toD(),
+            # *decr_var("SP"),
+            # *stack_top_toD(),
+            *pop_to_d(),
             f"D={operation}",
-            *D_to_stack_top(),
-            *inc_var("SP"),
+            # *D_to_stack_top(),
+            # *inc_var("SP"),
+            *push_d(),
         ]
 
     asm_lines: list[str]
 
-    if line in [ArithmeticType.ADD.value, ArithmeticType.SUB.value]:
+    if line == ArithmeticType.ADD.value:
         return top2_operation(operation="D+M")
+    elif line == ArithmeticType.SUB.value:
+        return top2_operation(operation="D-M")
     elif line == ArithmeticType.NEG.value:
         asm_lines = top1_operation(operation="-D")
     elif line == ArithmeticType.NOT.value:
         asm_lines = top1_operation(operation="!D")
-    elif line == ArithmeticType.EQUALS.value:
+    elif line in [ArithmeticType.EQUALS.value, ArithmeticType.GREATER.value, ArithmeticType.LESS.value]:
+
+        if line == ArithmeticType.EQUALS.value:
+            jmp_clause = "D;JEQ"
+        elif line == ArithmeticType.GREATER.value:
+            jmp_clause = "D;JGT"
+        elif line == ArithmeticType.LESS.value:
+            jmp_clause = "D;JLT"
+        else:
+            raise Exception
+
+        label_then = f"THEN{labels_cnt}"
+        label_endif = f"ENDIF{labels_cnt}"
+        labels_cnt += 1
+
         asm_lines = [
             *top2_operation(operation="D-M"),
-            *decr_var("SP"),
-            *stack_top_toD(),
-            # *D_to_stack_top(),
-            "@EQ",
-            "D;JEQ",
+            *pop_to_d(),
+            f"@{label_then}",
+            jmp_clause,
 
             "D=0",
-            "@ENDIF1",
+            f"@{label_endif}",
             "0;JMP",
 
-            "(EQ)",
-            "D=1",
+            f"({label_then})",
+            "D=-1",
 
-            "(ENDIF1)",
-            *D_to_stack_top(),
-            *inc_var("SP"),
-        ]
-    elif line == ArithmeticType.GREATER.value:
-        asm_lines = [
-            *top2_operation(operation="D-M"),
-            *decr_var("SP"),
-            *stack_top_toD(),
-            # *D_to_stack_top(),
-            "@GT",
-            "D;JGT",
-
-            "D=0",
-            "@ENDIF2",
-            "0;JMP",
-
-            "(GT)",
-            "D=1",
-
-            "(ENDIF2)",
-            *D_to_stack_top(),
-            *inc_var("SP"),
-        ]
-    elif line == ArithmeticType.LESS.value:
-        asm_lines = [
-            *top2_operation(operation="D-M"),
-            *decr_var("SP"),
-            *stack_top_toD(),
-            # *D_to_stack_top(),
-            "@LT",
-            "D;JLT",
-
-            "D=0",
-            "@ENDIF3",
-            "0;JMP",
-
-            "(LT)",
-            "D=1",
-
-            "(ENDIF3)",
-            *D_to_stack_top(),
-            *inc_var("SP"),
+            f"({label_endif})",
+            *push_d(),
         ]
     elif line == ArithmeticType.AND.value:
         asm_lines = [
@@ -265,7 +205,6 @@ def arithmetic_to_asm(line: str) -> list[str]:
         ]
     else:
         raise Exception(f"Unknown arithmetic operation: {line}")
-        # return []
 
     return asm_lines
 
@@ -310,7 +249,7 @@ def main(vm_filename: str):
 
 
 if __name__ == '__main__':
-    VM_FILENAME = "./MemoryAccess/BasicTest/BasicTest.vm"
-    # VM_FILENAME = "./MemoryAccess/PointerTest/PointerTest.vm"
+    # VM_FILENAME = "./MemoryAccess/BasicTest/BasicTest.vm"
+    VM_FILENAME = "./StackArithmetic/StackTest/StackTest.vm"
     # VM_FILENAME = "./myTest.vm"
     main(VM_FILENAME)
