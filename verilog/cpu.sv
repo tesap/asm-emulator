@@ -40,17 +40,19 @@ module cpu
     wire [15:0] a_reg_out;
     wire signed [15:0] d_reg_out;
     reg signed [15:0] out_m;
+    // reg write_m;
     
     wire a_write = (!opcode) || a_dest;
     wire d_write = opcode && d_dest;
     
     assign writeM = opcode && m_dest;
     assign addressM = a_reg_out;
-    assign outM = out_m;
+    assign outM = alu_out;
     
-    always @(posedge clk) begin
-            out_m <= alu_out;
-    end
+    // always @(posedge clk) begin
+    //         out_m <= alu_out;
+    //         write_m <= opcode && m_dest;
+    // end
     
     register a_register_inst
     (

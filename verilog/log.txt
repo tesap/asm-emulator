@@ -43,333 +43,43 @@ TEST     15,     18,  1,  1,  1,  1, 1,  1
 RES:             out, zr, ng
 RES:               1, 0,  0
 alu_tb.sv PASS
-./pc.sv:21: warning: @* found no sensitivities so it will never trigger.
-WARNING: computer.sv:40: $readmemb(ram_init.mem): Not enough words in the file for the requested range [0:31].
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=    x,
- i=    x
-================== COMPUTER: Time=0 clk=z reset=z | inM=    x instruction=xxxxxxxxxxxxxxxx reset=z | outM=    x writeM=x addressM=    x pc=    x
-./pc.sv:21: warning: @* found no sensitivities so it will never trigger.
-WARNING: ./computer.sv:40: $readmemb(ram_init.mem): Not enough words in the file for the requested range [0:31].
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=    x,
- i=    x
-========= CPU: DReg=     0
-================== COMPUTER: Time=0 clk=0 reset=1 | inM=    6 instruction=0000000000010000 reset=1 | outM=    x writeM=0 addressM=    0 pc=    0
-================== COMPUTER: Time=10 clk=1 reset=0 | inM=    6 instruction=0000000000010000 reset=0 | outM=    0 writeM=0 addressM=    0 pc=    0
-================== COMPUTER: Time=20 clk=0 reset=0 | inM=    x instruction=1110101010001000 reset=0 | outM=    0 writeM=1 addressM=   16 pc=    1
-================== COMPUTER: Time=30 clk=1 reset=0 | inM=    x instruction=1110101010001000 reset=0 | outM=    0 writeM=1 addressM=   16 pc=    1
-COMPUTER: write |    0| to    16
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=    0,
- i=    x
-================== COMPUTER: Time=40 clk=0 reset=0 | inM=    0 instruction=0000000000010001 reset=0 | outM=    0 writeM=0 addressM=   16 pc=    2
-================== COMPUTER: Time=50 clk=1 reset=0 | inM=    0 instruction=0000000000010001 reset=0 | outM=    0 writeM=0 addressM=   16 pc=    2
-================== COMPUTER: Time=60 clk=0 reset=0 | inM=    x instruction=1110111111001000 reset=0 | outM=    0 writeM=1 addressM=   17 pc=    3
-================== COMPUTER: Time=70 clk=1 reset=0 | inM=    x instruction=1110111111001000 reset=0 | outM=    1 writeM=1 addressM=   17 pc=    3
-COMPUTER: write |    1| to    17
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=    0,
- i=    1
-================== COMPUTER: Time=80 clk=0 reset=0 | inM=    1 instruction=0000000000010001 reset=0 | outM=    1 writeM=0 addressM=   17 pc=    4
-================== COMPUTER: Time=90 clk=1 reset=0 | inM=    1 instruction=0000000000010001 reset=0 | outM=    0 writeM=0 addressM=   17 pc=    4
-================== COMPUTER: Time=100 clk=0 reset=0 | inM=    1 instruction=1111110000010000 reset=0 | outM=    0 writeM=0 addressM=   17 pc=    5
-================== COMPUTER: Time=110 clk=1 reset=0 | inM=    1 instruction=1111110000010000 reset=0 | outM=    1 writeM=0 addressM=   17 pc=    5
-========= CPU: DReg=     1
-================== COMPUTER: Time=120 clk=0 reset=0 | inM=    1 instruction=0000000000000000 reset=0 | outM=    1 writeM=0 addressM=   17 pc=    6
-================== COMPUTER: Time=130 clk=1 reset=0 | inM=    1 instruction=0000000000000000 reset=0 | outM=    1 writeM=0 addressM=   17 pc=    6
-================== COMPUTER: Time=140 clk=0 reset=0 | inM=    6 instruction=1111010011010000 reset=0 | outM=    1 writeM=0 addressM=    0 pc=    7
-================== COMPUTER: Time=150 clk=1 reset=0 | inM=    6 instruction=1111010011010000 reset=0 | outM=65531 writeM=0 addressM=    0 pc=    7
-========= CPU: DReg=    -5
-================== COMPUTER: Time=160 clk=0 reset=0 | inM=    6 instruction=0000000000010010 reset=0 | outM=65531 writeM=0 addressM=    0 pc=    8
-================== COMPUTER: Time=170 clk=1 reset=0 | inM=    6 instruction=0000000000010010 reset=0 | outM=    0 writeM=0 addressM=    0 pc=    8
-================== COMPUTER: Time=180 clk=0 reset=0 | inM=    x instruction=1110001100000001 reset=0 | outM=    0 writeM=0 addressM=   18 pc=    9
-================== COMPUTER: Time=190 clk=1 reset=0 | inM=    x instruction=1110001100000001 reset=0 | outM=65531 writeM=0 addressM=   18 pc=    9
-================== COMPUTER: Time=200 clk=0 reset=0 | inM=    x instruction=0000000000000001 reset=0 | outM=65531 writeM=0 addressM=   18 pc=   10
-================== COMPUTER: Time=210 clk=1 reset=0 | inM=    x instruction=0000000000000001 reset=0 | outM=   18 writeM=0 addressM=   18 pc=   10
-================== COMPUTER: Time=220 clk=0 reset=0 | inM=    7 instruction=1111110000010000 reset=0 | outM=   18 writeM=0 addressM=    1 pc=   11
-================== COMPUTER: Time=230 clk=1 reset=0 | inM=    7 instruction=1111110000010000 reset=0 | outM=    7 writeM=0 addressM=    1 pc=   11
-========= CPU: DReg=     7
-================== COMPUTER: Time=240 clk=0 reset=0 | inM=    7 instruction=0000000000010000 reset=0 | outM=    7 writeM=0 addressM=    1 pc=   12
-================== COMPUTER: Time=250 clk=1 reset=0 | inM=    7 instruction=0000000000010000 reset=0 | outM=    1 writeM=0 addressM=    1 pc=   12
-================== COMPUTER: Time=260 clk=0 reset=0 | inM=    0 instruction=1111000010001000 reset=0 | outM=    1 writeM=1 addressM=   16 pc=   13
-================== COMPUTER: Time=270 clk=1 reset=0 | inM=    0 instruction=1111000010001000 reset=0 | outM=    7 writeM=1 addressM=   16 pc=   13
-COMPUTER: write |    7| to    16
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=    7,
- i=    1
-================== COMPUTER: Time=280 clk=0 reset=0 | inM=    7 instruction=0000000000010001 reset=0 | outM=    7 writeM=0 addressM=   16 pc=   14
-================== COMPUTER: Time=290 clk=1 reset=0 | inM=    7 instruction=0000000000010001 reset=0 | outM=    0 writeM=0 addressM=   16 pc=   14
-================== COMPUTER: Time=300 clk=0 reset=0 | inM=    1 instruction=1111110111001000 reset=0 | outM=    0 writeM=1 addressM=   17 pc=   15
-================== COMPUTER: Time=310 clk=1 reset=0 | inM=    1 instruction=1111110111001000 reset=0 | outM=    2 writeM=1 addressM=   17 pc=   15
-COMPUTER: write |    2| to    17
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=    7,
- i=    2
-================== COMPUTER: Time=320 clk=0 reset=0 | inM=    2 instruction=0000000000000100 reset=0 | outM=    2 writeM=0 addressM=   17 pc=   16
-================== COMPUTER: Time=330 clk=1 reset=0 | inM=    2 instruction=0000000000000100 reset=0 | outM=    1 writeM=0 addressM=   17 pc=   16
-================== COMPUTER: Time=340 clk=0 reset=0 | inM=    x instruction=1110101010000111 reset=0 | outM=    1 writeM=0 addressM=    4 pc=   17
-================== COMPUTER: Time=350 clk=1 reset=0 | inM=    x instruction=1110101010000111 reset=0 | outM=    0 writeM=0 addressM=    4 pc=   17
-================== COMPUTER: Time=360 clk=0 reset=0 | inM=    x instruction=0000000000010001 reset=0 | outM=    0 writeM=0 addressM=    4 pc=    4
-================== COMPUTER: Time=370 clk=1 reset=0 | inM=    x instruction=0000000000010001 reset=0 | outM=    4 writeM=0 addressM=    4 pc=    4
-================== COMPUTER: Time=380 clk=0 reset=0 | inM=    2 instruction=1111110000010000 reset=0 | outM=    4 writeM=0 addressM=   17 pc=    5
-================== COMPUTER: Time=390 clk=1 reset=0 | inM=    2 instruction=1111110000010000 reset=0 | outM=    2 writeM=0 addressM=   17 pc=    5
-========= CPU: DReg=     2
-================== COMPUTER: Time=400 clk=0 reset=0 | inM=    2 instruction=0000000000000000 reset=0 | outM=    2 writeM=0 addressM=   17 pc=    6
-================== COMPUTER: Time=410 clk=1 reset=0 | inM=    2 instruction=0000000000000000 reset=0 | outM=    0 writeM=0 addressM=   17 pc=    6
-================== COMPUTER: Time=420 clk=0 reset=0 | inM=    6 instruction=1111010011010000 reset=0 | outM=    0 writeM=0 addressM=    0 pc=    7
-================== COMPUTER: Time=430 clk=1 reset=0 | inM=    6 instruction=1111010011010000 reset=0 | outM=65532 writeM=0 addressM=    0 pc=    7
-========= CPU: DReg=    -4
-================== COMPUTER: Time=440 clk=0 reset=0 | inM=    6 instruction=0000000000010010 reset=0 | outM=65532 writeM=0 addressM=    0 pc=    8
-================== COMPUTER: Time=450 clk=1 reset=0 | inM=    6 instruction=0000000000010010 reset=0 | outM=    0 writeM=0 addressM=    0 pc=    8
-================== COMPUTER: Time=460 clk=0 reset=0 | inM=    x instruction=1110001100000001 reset=0 | outM=    0 writeM=0 addressM=   18 pc=    9
-================== COMPUTER: Time=470 clk=1 reset=0 | inM=    x instruction=1110001100000001 reset=0 | outM=65532 writeM=0 addressM=   18 pc=    9
-================== COMPUTER: Time=480 clk=0 reset=0 | inM=    x instruction=0000000000000001 reset=0 | outM=65532 writeM=0 addressM=   18 pc=   10
-================== COMPUTER: Time=490 clk=1 reset=0 | inM=    x instruction=0000000000000001 reset=0 | outM=   16 writeM=0 addressM=   18 pc=   10
-================== COMPUTER: Time=500 clk=0 reset=0 | inM=    7 instruction=1111110000010000 reset=0 | outM=   16 writeM=0 addressM=    1 pc=   11
-================== COMPUTER: Time=510 clk=1 reset=0 | inM=    7 instruction=1111110000010000 reset=0 | outM=    7 writeM=0 addressM=    1 pc=   11
-========= CPU: DReg=     7
-================== COMPUTER: Time=520 clk=0 reset=0 | inM=    7 instruction=0000000000010000 reset=0 | outM=    7 writeM=0 addressM=    1 pc=   12
-================== COMPUTER: Time=530 clk=1 reset=0 | inM=    7 instruction=0000000000010000 reset=0 | outM=    1 writeM=0 addressM=    1 pc=   12
-================== COMPUTER: Time=540 clk=0 reset=0 | inM=    7 instruction=1111000010001000 reset=0 | outM=    1 writeM=1 addressM=   16 pc=   13
-================== COMPUTER: Time=550 clk=1 reset=0 | inM=    7 instruction=1111000010001000 reset=0 | outM=   14 writeM=1 addressM=   16 pc=   13
-COMPUTER: write |   14| to    16
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=   14,
- i=    2
-================== COMPUTER: Time=560 clk=0 reset=0 | inM=   14 instruction=0000000000010001 reset=0 | outM=   14 writeM=0 addressM=   16 pc=   14
-================== COMPUTER: Time=570 clk=1 reset=0 | inM=   14 instruction=0000000000010001 reset=0 | outM=    0 writeM=0 addressM=   16 pc=   14
-================== COMPUTER: Time=580 clk=0 reset=0 | inM=    2 instruction=1111110111001000 reset=0 | outM=    0 writeM=1 addressM=   17 pc=   15
-================== COMPUTER: Time=590 clk=1 reset=0 | inM=    2 instruction=1111110111001000 reset=0 | outM=    3 writeM=1 addressM=   17 pc=   15
-COMPUTER: write |    3| to    17
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=   14,
- i=    3
-================== COMPUTER: Time=600 clk=0 reset=0 | inM=    3 instruction=0000000000000100 reset=0 | outM=    3 writeM=0 addressM=   17 pc=   16
-================== COMPUTER: Time=610 clk=1 reset=0 | inM=    3 instruction=0000000000000100 reset=0 | outM=    1 writeM=0 addressM=   17 pc=   16
-================== COMPUTER: Time=620 clk=0 reset=0 | inM=    x instruction=1110101010000111 reset=0 | outM=    1 writeM=0 addressM=    4 pc=   17
-================== COMPUTER: Time=630 clk=1 reset=0 | inM=    x instruction=1110101010000111 reset=0 | outM=    0 writeM=0 addressM=    4 pc=   17
-================== COMPUTER: Time=640 clk=0 reset=0 | inM=    x instruction=0000000000010001 reset=0 | outM=    0 writeM=0 addressM=    4 pc=    4
-================== COMPUTER: Time=650 clk=1 reset=0 | inM=    x instruction=0000000000010001 reset=0 | outM=    4 writeM=0 addressM=    4 pc=    4
-================== COMPUTER: Time=660 clk=0 reset=0 | inM=    3 instruction=1111110000010000 reset=0 | outM=    4 writeM=0 addressM=   17 pc=    5
-================== COMPUTER: Time=670 clk=1 reset=0 | inM=    3 instruction=1111110000010000 reset=0 | outM=    3 writeM=0 addressM=   17 pc=    5
-========= CPU: DReg=     3
-================== COMPUTER: Time=680 clk=0 reset=0 | inM=    3 instruction=0000000000000000 reset=0 | outM=    3 writeM=0 addressM=   17 pc=    6
-================== COMPUTER: Time=690 clk=1 reset=0 | inM=    3 instruction=0000000000000000 reset=0 | outM=    1 writeM=0 addressM=   17 pc=    6
-================== COMPUTER: Time=700 clk=0 reset=0 | inM=    6 instruction=1111010011010000 reset=0 | outM=    1 writeM=0 addressM=    0 pc=    7
-================== COMPUTER: Time=710 clk=1 reset=0 | inM=    6 instruction=1111010011010000 reset=0 | outM=65533 writeM=0 addressM=    0 pc=    7
-========= CPU: DReg=    -3
-================== COMPUTER: Time=720 clk=0 reset=0 | inM=    6 instruction=0000000000010010 reset=0 | outM=65533 writeM=0 addressM=    0 pc=    8
-================== COMPUTER: Time=730 clk=1 reset=0 | inM=    6 instruction=0000000000010010 reset=0 | outM=    0 writeM=0 addressM=    0 pc=    8
-================== COMPUTER: Time=740 clk=0 reset=0 | inM=    x instruction=1110001100000001 reset=0 | outM=    0 writeM=0 addressM=   18 pc=    9
-================== COMPUTER: Time=750 clk=1 reset=0 | inM=    x instruction=1110001100000001 reset=0 | outM=65533 writeM=0 addressM=   18 pc=    9
-================== COMPUTER: Time=760 clk=0 reset=0 | inM=    x instruction=0000000000000001 reset=0 | outM=65533 writeM=0 addressM=   18 pc=   10
-================== COMPUTER: Time=770 clk=1 reset=0 | inM=    x instruction=0000000000000001 reset=0 | outM=   16 writeM=0 addressM=   18 pc=   10
-================== COMPUTER: Time=780 clk=0 reset=0 | inM=    7 instruction=1111110000010000 reset=0 | outM=   16 writeM=0 addressM=    1 pc=   11
-================== COMPUTER: Time=790 clk=1 reset=0 | inM=    7 instruction=1111110000010000 reset=0 | outM=    7 writeM=0 addressM=    1 pc=   11
-========= CPU: DReg=     7
-================== COMPUTER: Time=800 clk=0 reset=0 | inM=    7 instruction=0000000000010000 reset=0 | outM=    7 writeM=0 addressM=    1 pc=   12
-================== COMPUTER: Time=810 clk=1 reset=0 | inM=    7 instruction=0000000000010000 reset=0 | outM=    1 writeM=0 addressM=    1 pc=   12
-================== COMPUTER: Time=820 clk=0 reset=0 | inM=   14 instruction=1111000010001000 reset=0 | outM=    1 writeM=1 addressM=   16 pc=   13
-================== COMPUTER: Time=830 clk=1 reset=0 | inM=   14 instruction=1111000010001000 reset=0 | outM=   21 writeM=1 addressM=   16 pc=   13
-COMPUTER: write |   21| to    16
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=   21,
- i=    3
-================== COMPUTER: Time=840 clk=0 reset=0 | inM=   21 instruction=0000000000010001 reset=0 | outM=   21 writeM=0 addressM=   16 pc=   14
-================== COMPUTER: Time=850 clk=1 reset=0 | inM=   21 instruction=0000000000010001 reset=0 | outM=    0 writeM=0 addressM=   16 pc=   14
-================== COMPUTER: Time=860 clk=0 reset=0 | inM=    3 instruction=1111110111001000 reset=0 | outM=    0 writeM=1 addressM=   17 pc=   15
-================== COMPUTER: Time=870 clk=1 reset=0 | inM=    3 instruction=1111110111001000 reset=0 | outM=    4 writeM=1 addressM=   17 pc=   15
-COMPUTER: write |    4| to    17
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=   21,
- i=    4
-================== COMPUTER: Time=880 clk=0 reset=0 | inM=    4 instruction=0000000000000100 reset=0 | outM=    4 writeM=0 addressM=   17 pc=   16
-================== COMPUTER: Time=890 clk=1 reset=0 | inM=    4 instruction=0000000000000100 reset=0 | outM=    1 writeM=0 addressM=   17 pc=   16
-================== COMPUTER: Time=900 clk=0 reset=0 | inM=    x instruction=1110101010000111 reset=0 | outM=    1 writeM=0 addressM=    4 pc=   17
-================== COMPUTER: Time=910 clk=1 reset=0 | inM=    x instruction=1110101010000111 reset=0 | outM=    0 writeM=0 addressM=    4 pc=   17
-================== COMPUTER: Time=920 clk=0 reset=0 | inM=    x instruction=0000000000010001 reset=0 | outM=    0 writeM=0 addressM=    4 pc=    4
-================== COMPUTER: Time=930 clk=1 reset=0 | inM=    x instruction=0000000000010001 reset=0 | outM=    4 writeM=0 addressM=    4 pc=    4
-================== COMPUTER: Time=940 clk=0 reset=0 | inM=    4 instruction=1111110000010000 reset=0 | outM=    4 writeM=0 addressM=   17 pc=    5
-================== COMPUTER: Time=950 clk=1 reset=0 | inM=    4 instruction=1111110000010000 reset=0 | outM=    4 writeM=0 addressM=   17 pc=    5
-========= CPU: DReg=     4
-================== COMPUTER: Time=960 clk=0 reset=0 | inM=    4 instruction=0000000000000000 reset=0 | outM=    4 writeM=0 addressM=   17 pc=    6
-================== COMPUTER: Time=970 clk=1 reset=0 | inM=    4 instruction=0000000000000000 reset=0 | outM=    0 writeM=0 addressM=   17 pc=    6
-================== COMPUTER: Time=980 clk=0 reset=0 | inM=    6 instruction=1111010011010000 reset=0 | outM=    0 writeM=0 addressM=    0 pc=    7
-================== COMPUTER: Time=990 clk=1 reset=0 | inM=    6 instruction=1111010011010000 reset=0 | outM=65534 writeM=0 addressM=    0 pc=    7
-========= CPU: DReg=    -2
-================== COMPUTER: Time=1000 clk=0 reset=0 | inM=    6 instruction=0000000000010010 reset=0 | outM=65534 writeM=0 addressM=    0 pc=    8
-================== COMPUTER: Time=1010 clk=1 reset=0 | inM=    6 instruction=0000000000010010 reset=0 | outM=    0 writeM=0 addressM=    0 pc=    8
-================== COMPUTER: Time=1020 clk=0 reset=0 | inM=    x instruction=1110001100000001 reset=0 | outM=    0 writeM=0 addressM=   18 pc=    9
-================== COMPUTER: Time=1030 clk=1 reset=0 | inM=    x instruction=1110001100000001 reset=0 | outM=65534 writeM=0 addressM=   18 pc=    9
-================== COMPUTER: Time=1040 clk=0 reset=0 | inM=    x instruction=0000000000000001 reset=0 | outM=65534 writeM=0 addressM=   18 pc=   10
-================== COMPUTER: Time=1050 clk=1 reset=0 | inM=    x instruction=0000000000000001 reset=0 | outM=   18 writeM=0 addressM=   18 pc=   10
-================== COMPUTER: Time=1060 clk=0 reset=0 | inM=    7 instruction=1111110000010000 reset=0 | outM=   18 writeM=0 addressM=    1 pc=   11
-================== COMPUTER: Time=1070 clk=1 reset=0 | inM=    7 instruction=1111110000010000 reset=0 | outM=    7 writeM=0 addressM=    1 pc=   11
-========= CPU: DReg=     7
-================== COMPUTER: Time=1080 clk=0 reset=0 | inM=    7 instruction=0000000000010000 reset=0 | outM=    7 writeM=0 addressM=    1 pc=   12
-================== COMPUTER: Time=1090 clk=1 reset=0 | inM=    7 instruction=0000000000010000 reset=0 | outM=    1 writeM=0 addressM=    1 pc=   12
-================== COMPUTER: Time=1100 clk=0 reset=0 | inM=   21 instruction=1111000010001000 reset=0 | outM=    1 writeM=1 addressM=   16 pc=   13
-================== COMPUTER: Time=1110 clk=1 reset=0 | inM=   21 instruction=1111000010001000 reset=0 | outM=   28 writeM=1 addressM=   16 pc=   13
-COMPUTER: write |   28| to    16
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=   28,
- i=    4
-================== COMPUTER: Time=1120 clk=0 reset=0 | inM=   28 instruction=0000000000010001 reset=0 | outM=   28 writeM=0 addressM=   16 pc=   14
-================== COMPUTER: Time=1130 clk=1 reset=0 | inM=   28 instruction=0000000000010001 reset=0 | outM=    0 writeM=0 addressM=   16 pc=   14
-================== COMPUTER: Time=1140 clk=0 reset=0 | inM=    4 instruction=1111110111001000 reset=0 | outM=    0 writeM=1 addressM=   17 pc=   15
-================== COMPUTER: Time=1150 clk=1 reset=0 | inM=    4 instruction=1111110111001000 reset=0 | outM=    5 writeM=1 addressM=   17 pc=   15
-COMPUTER: write |    5| to    17
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=   28,
- i=    5
-================== COMPUTER: Time=1160 clk=0 reset=0 | inM=    5 instruction=0000000000000100 reset=0 | outM=    5 writeM=0 addressM=   17 pc=   16
-================== COMPUTER: Time=1170 clk=1 reset=0 | inM=    5 instruction=0000000000000100 reset=0 | outM=    1 writeM=0 addressM=   17 pc=   16
-================== COMPUTER: Time=1180 clk=0 reset=0 | inM=    x instruction=1110101010000111 reset=0 | outM=    1 writeM=0 addressM=    4 pc=   17
-================== COMPUTER: Time=1190 clk=1 reset=0 | inM=    x instruction=1110101010000111 reset=0 | outM=    0 writeM=0 addressM=    4 pc=   17
-================== COMPUTER: Time=1200 clk=0 reset=0 | inM=    x instruction=0000000000010001 reset=0 | outM=    0 writeM=0 addressM=    4 pc=    4
-================== COMPUTER: Time=1210 clk=1 reset=0 | inM=    x instruction=0000000000010001 reset=0 | outM=    4 writeM=0 addressM=    4 pc=    4
-================== COMPUTER: Time=1220 clk=0 reset=0 | inM=    5 instruction=1111110000010000 reset=0 | outM=    4 writeM=0 addressM=   17 pc=    5
-================== COMPUTER: Time=1230 clk=1 reset=0 | inM=    5 instruction=1111110000010000 reset=0 | outM=    5 writeM=0 addressM=   17 pc=    5
-========= CPU: DReg=     5
-================== COMPUTER: Time=1240 clk=0 reset=0 | inM=    5 instruction=0000000000000000 reset=0 | outM=    5 writeM=0 addressM=   17 pc=    6
-================== COMPUTER: Time=1250 clk=1 reset=0 | inM=    5 instruction=0000000000000000 reset=0 | outM=    1 writeM=0 addressM=   17 pc=    6
-================== COMPUTER: Time=1260 clk=0 reset=0 | inM=    6 instruction=1111010011010000 reset=0 | outM=    1 writeM=0 addressM=    0 pc=    7
-================== COMPUTER: Time=1270 clk=1 reset=0 | inM=    6 instruction=1111010011010000 reset=0 | outM=65535 writeM=0 addressM=    0 pc=    7
-========= CPU: DReg=    -1
-================== COMPUTER: Time=1280 clk=0 reset=0 | inM=    6 instruction=0000000000010010 reset=0 | outM=65535 writeM=0 addressM=    0 pc=    8
-================== COMPUTER: Time=1290 clk=1 reset=0 | inM=    6 instruction=0000000000010010 reset=0 | outM=    0 writeM=0 addressM=    0 pc=    8
-================== COMPUTER: Time=1300 clk=0 reset=0 | inM=    x instruction=1110001100000001 reset=0 | outM=    0 writeM=0 addressM=   18 pc=    9
-================== COMPUTER: Time=1310 clk=1 reset=0 | inM=    x instruction=1110001100000001 reset=0 | outM=65535 writeM=0 addressM=   18 pc=    9
-================== COMPUTER: Time=1320 clk=0 reset=0 | inM=    x instruction=0000000000000001 reset=0 | outM=65535 writeM=0 addressM=   18 pc=   10
-================== COMPUTER: Time=1330 clk=1 reset=0 | inM=    x instruction=0000000000000001 reset=0 | outM=   18 writeM=0 addressM=   18 pc=   10
-================== COMPUTER: Time=1340 clk=0 reset=0 | inM=    7 instruction=1111110000010000 reset=0 | outM=   18 writeM=0 addressM=    1 pc=   11
-================== COMPUTER: Time=1350 clk=1 reset=0 | inM=    7 instruction=1111110000010000 reset=0 | outM=    7 writeM=0 addressM=    1 pc=   11
-========= CPU: DReg=     7
-================== COMPUTER: Time=1360 clk=0 reset=0 | inM=    7 instruction=0000000000010000 reset=0 | outM=    7 writeM=0 addressM=    1 pc=   12
-================== COMPUTER: Time=1370 clk=1 reset=0 | inM=    7 instruction=0000000000010000 reset=0 | outM=    1 writeM=0 addressM=    1 pc=   12
-================== COMPUTER: Time=1380 clk=0 reset=0 | inM=   28 instruction=1111000010001000 reset=0 | outM=    1 writeM=1 addressM=   16 pc=   13
-================== COMPUTER: Time=1390 clk=1 reset=0 | inM=   28 instruction=1111000010001000 reset=0 | outM=   35 writeM=1 addressM=   16 pc=   13
-COMPUTER: write |   35| to    16
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=   35,
- i=    5
-================== COMPUTER: Time=1400 clk=0 reset=0 | inM=   35 instruction=0000000000010001 reset=0 | outM=   35 writeM=0 addressM=   16 pc=   14
-================== COMPUTER: Time=1410 clk=1 reset=0 | inM=   35 instruction=0000000000010001 reset=0 | outM=    0 writeM=0 addressM=   16 pc=   14
-================== COMPUTER: Time=1420 clk=0 reset=0 | inM=    5 instruction=1111110111001000 reset=0 | outM=    0 writeM=1 addressM=   17 pc=   15
-================== COMPUTER: Time=1430 clk=1 reset=0 | inM=    5 instruction=1111110111001000 reset=0 | outM=    6 writeM=1 addressM=   17 pc=   15
-COMPUTER: write |    6| to    17
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=   35,
- i=    6
-================== COMPUTER: Time=1440 clk=0 reset=0 | inM=    6 instruction=0000000000000100 reset=0 | outM=    6 writeM=0 addressM=   17 pc=   16
-================== COMPUTER: Time=1450 clk=1 reset=0 | inM=    6 instruction=0000000000000100 reset=0 | outM=    1 writeM=0 addressM=   17 pc=   16
-================== COMPUTER: Time=1460 clk=0 reset=0 | inM=    x instruction=1110101010000111 reset=0 | outM=    1 writeM=0 addressM=    4 pc=   17
-================== COMPUTER: Time=1470 clk=1 reset=0 | inM=    x instruction=1110101010000111 reset=0 | outM=    0 writeM=0 addressM=    4 pc=   17
-================== COMPUTER: Time=1480 clk=0 reset=0 | inM=    x instruction=0000000000010001 reset=0 | outM=    0 writeM=0 addressM=    4 pc=    4
-================== COMPUTER: Time=1490 clk=1 reset=0 | inM=    x instruction=0000000000010001 reset=0 | outM=    4 writeM=0 addressM=    4 pc=    4
-================== COMPUTER: Time=1500 clk=0 reset=0 | inM=    6 instruction=1111110000010000 reset=0 | outM=    4 writeM=0 addressM=   17 pc=    5
-================== COMPUTER: Time=1510 clk=1 reset=0 | inM=    6 instruction=1111110000010000 reset=0 | outM=    6 writeM=0 addressM=   17 pc=    5
-========= CPU: DReg=     6
-================== COMPUTER: Time=1520 clk=0 reset=0 | inM=    6 instruction=0000000000000000 reset=0 | outM=    6 writeM=0 addressM=   17 pc=    6
-================== COMPUTER: Time=1530 clk=1 reset=0 | inM=    6 instruction=0000000000000000 reset=0 | outM=    0 writeM=0 addressM=   17 pc=    6
-================== COMPUTER: Time=1540 clk=0 reset=0 | inM=    6 instruction=1111010011010000 reset=0 | outM=    0 writeM=0 addressM=    0 pc=    7
-================== COMPUTER: Time=1550 clk=1 reset=0 | inM=    6 instruction=1111010011010000 reset=0 | outM=    0 writeM=0 addressM=    0 pc=    7
-========= CPU: DReg=     0
-================== COMPUTER: Time=1560 clk=0 reset=0 | inM=    6 instruction=0000000000010010 reset=0 | outM=    0 writeM=0 addressM=    0 pc=    8
-================== COMPUTER: Time=1570 clk=1 reset=0 | inM=    6 instruction=0000000000010010 reset=0 | outM=    0 writeM=0 addressM=    0 pc=    8
-================== COMPUTER: Time=1580 clk=0 reset=0 | inM=    x instruction=1110001100000001 reset=0 | outM=    0 writeM=0 addressM=   18 pc=    9
-================== COMPUTER: Time=1590 clk=1 reset=0 | inM=    x instruction=1110001100000001 reset=0 | outM=    0 writeM=0 addressM=   18 pc=    9
-================== COMPUTER: Time=1600 clk=0 reset=0 | inM=    x instruction=0000000000000001 reset=0 | outM=    0 writeM=0 addressM=   18 pc=   10
-================== COMPUTER: Time=1610 clk=1 reset=0 | inM=    x instruction=0000000000000001 reset=0 | outM=    0 writeM=0 addressM=   18 pc=   10
-================== COMPUTER: Time=1620 clk=0 reset=0 | inM=    7 instruction=1111110000010000 reset=0 | outM=    0 writeM=0 addressM=    1 pc=   11
-================== COMPUTER: Time=1630 clk=1 reset=0 | inM=    7 instruction=1111110000010000 reset=0 | outM=    7 writeM=0 addressM=    1 pc=   11
-========= CPU: DReg=     7
-================== COMPUTER: Time=1640 clk=0 reset=0 | inM=    7 instruction=0000000000010000 reset=0 | outM=    7 writeM=0 addressM=    1 pc=   12
-================== COMPUTER: Time=1650 clk=1 reset=0 | inM=    7 instruction=0000000000010000 reset=0 | outM=    1 writeM=0 addressM=    1 pc=   12
-================== COMPUTER: Time=1660 clk=0 reset=0 | inM=   35 instruction=1111000010001000 reset=0 | outM=    1 writeM=1 addressM=   16 pc=   13
-================== COMPUTER: Time=1670 clk=1 reset=0 | inM=   35 instruction=1111000010001000 reset=0 | outM=   42 writeM=1 addressM=   16 pc=   13
-COMPUTER: write |   42| to    16
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=   42,
- i=    6
-================== COMPUTER: Time=1680 clk=0 reset=0 | inM=   42 instruction=0000000000010001 reset=0 | outM=   42 writeM=0 addressM=   16 pc=   14
-================== COMPUTER: Time=1690 clk=1 reset=0 | inM=   42 instruction=0000000000010001 reset=0 | outM=    0 writeM=0 addressM=   16 pc=   14
-================== COMPUTER: Time=1700 clk=0 reset=0 | inM=    6 instruction=1111110111001000 reset=0 | outM=    0 writeM=1 addressM=   17 pc=   15
-================== COMPUTER: Time=1710 clk=1 reset=0 | inM=    6 instruction=1111110111001000 reset=0 | outM=    7 writeM=1 addressM=   17 pc=   15
-COMPUTER: write |    7| to    17
-RAM: 0=    6,
- 1=    7,
- 2=    x,
- sum=   42,
- i=    7
-================== COMPUTER: Time=1720 clk=0 reset=0 | inM=    7 instruction=0000000000000100 reset=0 | outM=    7 writeM=0 addressM=   17 pc=   16
-================== COMPUTER: Time=1730 clk=1 reset=0 | inM=    7 instruction=0000000000000100 reset=0 | outM=    1 writeM=0 addressM=   17 pc=   16
-================== COMPUTER: Time=1740 clk=0 reset=0 | inM=    x instruction=1110101010000111 reset=0 | outM=    1 writeM=0 addressM=    4 pc=   17
-================== COMPUTER: Time=1750 clk=1 reset=0 | inM=    x instruction=1110101010000111 reset=0 | outM=    0 writeM=0 addressM=    4 pc=   17
-================== COMPUTER: Time=1760 clk=0 reset=0 | inM=    x instruction=0000000000010001 reset=0 | outM=    0 writeM=0 addressM=    4 pc=    4
-================== COMPUTER: Time=1770 clk=1 reset=0 | inM=    x instruction=0000000000010001 reset=0 | outM=    4 writeM=0 addressM=    4 pc=    4
-================== COMPUTER: Time=1780 clk=0 reset=0 | inM=    7 instruction=1111110000010000 reset=0 | outM=    4 writeM=0 addressM=   17 pc=    5
-================== COMPUTER: Time=1790 clk=1 reset=0 | inM=    7 instruction=1111110000010000 reset=0 | outM=    7 writeM=0 addressM=   17 pc=    5
-================== COMPUTER: Time=1800 clk=0 reset=0 | inM=    7 instruction=0000000000000000 reset=0 | outM=    7 writeM=0 addressM=   17 pc=    6
-================== COMPUTER: Time=1810 clk=1 reset=0 | inM=    7 instruction=0000000000000000 reset=0 | outM=    1 writeM=0 addressM=   17 pc=    6
-================== COMPUTER: Time=1820 clk=0 reset=0 | inM=    6 instruction=1111010011010000 reset=0 | outM=    1 writeM=0 addressM=    0 pc=    7
-================== COMPUTER: Time=1830 clk=1 reset=0 | inM=    6 instruction=1111010011010000 reset=0 | outM=    1 writeM=0 addressM=    0 pc=    7
-========= CPU: DReg=     1
-================== COMPUTER: Time=1840 clk=0 reset=0 | inM=    6 instruction=0000000000010010 reset=0 | outM=    1 writeM=0 addressM=    0 pc=    8
-================== COMPUTER: Time=1850 clk=1 reset=0 | inM=    6 instruction=0000000000010010 reset=0 | outM=    0 writeM=0 addressM=    0 pc=    8
-================== COMPUTER: Time=1860 clk=0 reset=0 | inM=    x instruction=1110001100000001 reset=0 | outM=    0 writeM=0 addressM=   18 pc=    9
-================== COMPUTER: Time=1870 clk=1 reset=0 | inM=    x instruction=1110001100000001 reset=0 | outM=    1 writeM=0 addressM=   18 pc=    9
-================== COMPUTER: Time=1880 clk=0 reset=0 | inM=    x instruction=0000000000010000 reset=0 | outM=    1 writeM=0 addressM=   18 pc=   18
-================== COMPUTER: Time=1890 clk=1 reset=0 | inM=    x instruction=0000000000010000 reset=0 | outM=    0 writeM=0 addressM=   18 pc=   18
-================== COMPUTER: Time=1900 clk=0 reset=0 | inM=   42 instruction=1111110000010000 reset=0 | outM=    0 writeM=0 addressM=   16 pc=   19
-================== COMPUTER: Time=1910 clk=1 reset=0 | inM=   42 instruction=1111110000010000 reset=0 | outM=   42 writeM=0 addressM=   16 pc=   19
-========= CPU: DReg=    42
-================== COMPUTER: Time=1920 clk=0 reset=0 | inM=   42 instruction=0000000000000010 reset=0 | outM=   42 writeM=0 addressM=   16 pc=   20
-================== COMPUTER: Time=1930 clk=1 reset=0 | inM=   42 instruction=0000000000000010 reset=0 | outM=    0 writeM=0 addressM=   16 pc=   20
-================== COMPUTER: Time=1940 clk=0 reset=0 | inM=    x instruction=1110001100001000 reset=0 | outM=    0 writeM=1 addressM=    2 pc=   21
-================== COMPUTER: Time=1950 clk=1 reset=0 | inM=    x instruction=1110001100001000 reset=0 | outM=   42 writeM=1 addressM=    2 pc=   21
-COMPUTER: write |   42| to     2
-RAM: 0=    6,
- 1=    7,
- 2=   42,
- sum=   42,
- i=    7
-================== COMPUTER: Time=1960 clk=0 reset=0 | inM=   42 instruction=xxxxxxxxxxxxxxxx reset=0 | outM=   42 writeM=x addressM=    2 pc=   22
-================== COMPUTER: Time=1970 clk=1 reset=0 | inM=   42 instruction=xxxxxxxxxxxxxxxx reset=0 | outM=    x writeM=x addressM=    2 pc=   22
-computer_tb.sv: PASS
-================== COMPUTER: Time=1980 clk=0 reset=0 | inM=   42 instruction=xxxxxxxxxxxxxxxx reset=0 | outM=    x writeM=x addressM=    2 pc=   22
-./pc.sv:21: warning: @* found no sensitivities so it will never trigger.
+alu_tb.sv:86: $finish called at 11 (1s)
+No top level modules, and no -s option.
+computer_tb.sv: Too big values
+computer_tb.sv:45: $finish called at 0 (1s)
+Time=0 clk=0 reset=1 inM=0000 instruction=0000000000000000 reset=1 | outM=0000 writeM=0 addressM=0000 pc=    0
+Time=10 clk=1 reset=0 inM=0000 instruction=0000000000000000 reset=0 | outM=0000 writeM=0 addressM=0000 pc=    0
+Time=20 clk=0 reset=0 inM=0000 instruction=0000000000000000 reset=0 | outM=0000 writeM=0 addressM=0000 pc=    1
+Time=30 clk=1 reset=0 inM=0000 instruction=0000101010100001 reset=0 | outM=0000 writeM=0 addressM=0000 pc=    1
+Time=40 clk=0 reset=0 inM=0000 instruction=0000101010100001 reset=0 | outM=0000 writeM=0 addressM=0aa1 pc=    2
+cpu_tb.sv: CHECK
+Time=50 clk=1 reset=0 inM=0000 instruction=1000111111001000 reset=0 | outM=0001 writeM=1 addressM=0aa1 pc=    2
+cpu_tb.sv: CHECK
+Time=60 clk=0 reset=0 inM=0000 instruction=1110110000001000 reset=0 | outM=0aa1 writeM=1 addressM=0aa1 pc=    3
+cpu_tb.sv: CHECK
+Time=70 clk=1 reset=0 inM=0aa1 instruction=1110110111100000 reset=0 | outM=0aa2 writeM=0 addressM=0aa1 pc=    3
+Time=80 clk=0 reset=0 inM=0aa1 instruction=1110110111100000 reset=0 | outM=0aa3 writeM=0 addressM=0aa2 pc=    4
+cpu_tb.sv: CHECK
+Time=90 clk=1 reset=0 inM=0aa1 instruction=1110110010100000 reset=0 | outM=0aa1 writeM=0 addressM=0aa2 pc=    4
+Time=100 clk=0 reset=0 inM=0aa1 instruction=1110110010100000 reset=0 | outM=0aa0 writeM=0 addressM=0aa1 pc=    5
+cpu_tb.sv: CHECK
+Time=110 clk=1 reset=0 inM=0aa1 instruction=1111110111101000 reset=0 | outM=0aa2 writeM=1 addressM=0aa1 pc=    5
+Time=120 clk=0 reset=0 inM=0aa1 instruction=1111110111101000 reset=0 | outM=0aa2 writeM=1 addressM=0aa2 pc=    6
+cpu_tb.sv: CHECK
+Time=130 clk=1 reset=0 inM=0aa1 instruction=0000000000000101 reset=0 | outM=0000 writeM=0 addressM=0aa2 pc=    6
+Time=140 clk=0 reset=0 inM=0aa1 instruction=0000000000000101 reset=0 | outM=0000 writeM=0 addressM=0005 pc=    7
+cpu_tb.sv: CHECK
+Time=150 clk=1 reset=0 inM=0aa1 instruction=1110110000010000 reset=0 | outM=0005 writeM=0 addressM=0005 pc=    7
+Time=160 clk=0 reset=0 inM=0aa1 instruction=1110110000010000 reset=0 | outM=0005 writeM=0 addressM=0005 pc=    8
+Time=170 clk=1 reset=0 inM=0aa1 instruction=1110011111100000 reset=0 | outM=0006 writeM=0 addressM=0005 pc=    8
+Time=180 clk=0 reset=0 inM=0aa1 instruction=1110011111100000 reset=0 | outM=0006 writeM=0 addressM=0006 pc=    9
+cpu_tb.sv: CHECK
+Time=190 clk=1 reset=0 inM=0aa1 instruction=1110101010000111 reset=0 | outM=0000 writeM=0 addressM=0006 pc=    9
+Time=200 clk=0 reset=0 inM=0aa1 instruction=1110101010000111 reset=0 | outM=0000 writeM=0 addressM=0006 pc=    6
+cpu_tb.sv: CHECK
+cpu_tb.sv: PASS
+cpu_tb.sv:125: $finish called at 210 (1s)
+Time=210 clk=1 reset=0 inM=0aa1 instruction=1110101010000111 reset=0 | outM=0000 writeM=0 addressM=0006 pc=    6
 TEST opcode=0, j1=0, j2=0, j3=1, zr=0, ng=0, out_load=0, out_inc=1
 TEST opcode=0, j1=1, j2=1, j3=1, zr=1, ng=0, out_load=0, out_inc=1
 TEST opcode=1, j1=0, j2=0, j3=1, zr=0, ng=0, out_load=1, out_inc=0
@@ -377,14 +87,29 @@ TEST opcode=1, j1=0, j2=1, j3=0, zr=1, ng=0, out_load=1, out_inc=0
 TEST opcode=1, j1=0, j2=1, j3=1, zr=1, ng=0, out_load=1, out_inc=0
 TEST opcode=1, j1=0, j2=1, j3=1, zr=0, ng=0, out_load=1, out_inc=0
 jmp_handle_tb.sv: PASS
-pc.sv:21: warning: @* found no sensitivities so it will never trigger.
-./pc.sv:21: warning: @* found no sensitivities so it will never trigger.
+jmp_handle_tb.sv:54: $finish called at 6 (1s)
 Time=0 clk=0 reset=1 load=0 inc=0 in_data=0000 out_data=0000
 Time=10 clk=1 reset=0 load=0 inc=0 in_data=0000 out_data=0000
-Time=20 clk=0 reset=0 load=1 inc=0 in_data=abcd out_data=0000
+Time=20 clk=0 reset=0 load=0 inc=0 in_data=0000 out_data=0000
 Time=30 clk=1 reset=0 load=1 inc=0 in_data=abcd out_data=0000
-ERROR: Output mismatch at time 40
-Time=40 clk=0 reset=0 load=0 inc=0 in_data=abcd out_data=abcd
+Time=40 clk=0 reset=0 load=1 inc=0 in_data=abcd out_data=abcd
+Time=50 clk=1 reset=0 load=0 inc=0 in_data=abcd out_data=abcd
+Time=60 clk=0 reset=0 load=0 inc=0 in_data=abcd out_data=abcd
+Time=70 clk=1 reset=0 load=0 inc=0 in_data=abcd out_data=abcd
+Time=80 clk=0 reset=0 load=0 inc=0 in_data=abcd out_data=abcd
+Time=90 clk=1 reset=0 load=1 inc=0 in_data=1111 out_data=abcd
+Time=100 clk=0 reset=0 load=1 inc=0 in_data=1111 out_data=1111
+Time=110 clk=1 reset=0 load=0 inc=0 in_data=1111 out_data=1111
+Time=120 clk=0 reset=0 load=0 inc=0 in_data=1111 out_data=1111
+Time=130 clk=1 reset=0 load=0 inc=1 in_data=1111 out_data=1111
+Time=140 clk=0 reset=0 load=0 inc=1 in_data=1111 out_data=1112
+Time=150 clk=1 reset=0 load=0 inc=0 in_data=1111 out_data=1112
+Time=160 clk=0 reset=0 load=0 inc=0 in_data=1111 out_data=1112
+Time=170 clk=1 reset=0 load=0 inc=1 in_data=1111 out_data=1112
+Time=180 clk=0 reset=0 load=0 inc=1 in_data=1111 out_data=1113
+pc.sv: PASS
+pc_tb.sv:93: $finish called at 190 (1s)
+Time=190 clk=1 reset=0 load=0 inc=0 in_data=1111 out_data=1113
 Time=0 clk=0 reset=1 write=0 in_data=0000 out_data=0000
 Time=10 clk=1 reset=0 write=0 in_data=0000 out_data=0000
 Time=20 clk=0 reset=0 write=1 in_data=abcd out_data=abcd
@@ -400,4 +125,5 @@ Time=110 clk=1 reset=0 write=1 in_data=1111 out_data=1111
 Time=120 clk=0 reset=1 write=0 in_data=1111 out_data=0000
 Time=130 clk=1 reset=1 write=0 in_data=1111 out_data=0000
 register.sv: PASS
+register_tb.sv:77: $finish called at 140 (1s)
 Time=140 clk=0 reset=0 write=0 in_data=1111 out_data=0000

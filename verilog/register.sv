@@ -13,6 +13,7 @@ module register
     reg [15:0] r;
 
     always @(negedge clk or posedge reset) begin
+        // $display("REGISTER: __UPDATE__");
         if (reset) begin
             r <= 0;
         end

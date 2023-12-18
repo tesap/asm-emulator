@@ -3,8 +3,8 @@
 
 module computer
 # (
-    parameter rom_size = 22,
-    parameter ram_size = 32
+    parameter rom_size,
+    parameter ram_size
 )
 (
     input clk,
@@ -25,17 +25,17 @@ module computer
     assign ended = pc >= rom_size;
     
     initial begin
-        $monitor(
-            "================== COMPUTER: Time=%0t clk=%b reset=%b | inM=%d instruction=%b reset=%b | outM=%d writeM=%b addressM=%d pc=%d",
-            $time, clk, reset, inM, instruction, reset, outM, writeM, addressM, pc
-        );
+        // $monitor(
+        //     "================== COMPUTER: Time=%0t clk=%b reset=%b | inM=%d instruction=%b reset=%b | outM=%d writeM=%b addressM=%d pc=%d",
+        //     $time, clk, reset, inM, instruction, reset, outM, writeM, addressM, pc
+        // );
     end
     
-    always @* begin
-        $display("RAM: 0=%d,\n 1=%d,\n 2=%d,\n sum=%d,\n i=%d", ram[0], ram[1], ram[2], ram[16], ram[17]);
-    end
+    // always @* begin
+    //     $display("RAM: 0=%d,\n 1=%d,\n 2=%d,\n sum=%d,\n i=%d", ram[0], ram[1], ram[2], ram[16], ram[17]);
+    // end
     
-    initial begin
+    initial @(negedge reset) begin
         $readmemb("main.hack", program_rom);
         $readmemb("ram_init.mem", ram);
     end
@@ -46,7 +46,6 @@ module computer
     
     always @(negedge clk) begin
         if (writeM) begin
-            $display("COMPUTER: write |%d| to %d", outM, addressM);
             ram[addressM] <= outM;
         end
     end
