@@ -1,5 +1,5 @@
 import enum
-import re
+import re, sys
 from typing import Type
 
 seg_ptr_addr_mapping = {
@@ -241,15 +241,16 @@ def main(vm_filename: str):
     s = "\n".join(asm_lines_all)
     print(s)
 
-    asm_fname = vm_filename.replace(".vm", "")
-    asm_fname += ".asm"
+    # asm_fname = vm_filename.replace(".vm", "")
+    # asm_fname += ".asm"
 
-    with open(asm_fname, 'w') as fout:
-        fout.write(s)
+    # with open(asm_fname, 'w') as fout:
+    #     fout.write(s)
 
 
 if __name__ == '__main__':
-    # VM_FILENAME = "./MemoryAccess/BasicTest/BasicTest.vm"
-    VM_FILENAME = "./StackArithmetic/StackTest/StackTest.vm"
-    # VM_FILENAME = "./myTest.vm"
-    main(VM_FILENAME)
+    if len(sys.argv) != 2:
+        print( "Usage: vm_translator file.vm" )
+    else:
+        main(sys.argv[1])
+

@@ -42,13 +42,13 @@ module tb_register;
         @ (negedge clk);
         write = 0;
         if (out_data !== 16'hABCD) begin
-            $display("ERROR: Output mismatch at time %0t", $time);
+            $display("FAIL: Output mismatch at time %0t", $time);
             $finish;
         end
 
         @ (negedge clk);
         if (out_data !== 16'hABCD) begin
-            $display("ERROR: Output mismatch at time %0t", $time);
+            $display("FAIL: Output mismatch at time %0t", $time);
             $finish;
         end
 
@@ -58,7 +58,7 @@ module tb_register;
 
         @ (negedge clk);
         if (out_data !== 16'h1111) begin
-            $display("ERROR: Output mismatch at time %0t", $time);
+            $display("FAIL: Output mismatch at time %0t", $time);
             $finish;
         end
 
@@ -69,7 +69,7 @@ module tb_register;
         @ (negedge clk);
         reset = 0;
         if (out_data !== 0) begin
-            $display("ERROR: Output mismatch at time %0t", $time);
+            $display("FAIL: Output mismatch at time %0t", $time);
             $finish;
         end
 

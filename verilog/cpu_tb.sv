@@ -49,7 +49,7 @@ module tb_cpu;
         @ (posedge clk);
         $display("%s: CHECK", `__FILE__);
         if (addressM !== 16'h0AA1) begin
-            $display("%s: ERROR: Output mismatch at time %0t", `__FILE__, $time);
+            $display("%s: FAIL: Output mismatch at time %0t", `__FILE__, $time);
             $finish;
         end
 		  
@@ -57,7 +57,7 @@ module tb_cpu;
         @ (negedge clk);
         $display("%s: CHECK", `__FILE__);
         if (addressM !== 16'h0AA1 || outM !== 16'h001 || writeM !== 1) begin
-            $display("%s: ERROR: Output mismatch at time %0t", `__FILE__, $time);
+            $display("%s: FAIL: Output mismatch at time %0t", `__FILE__, $time);
             $finish;
         end
 		  
@@ -65,7 +65,7 @@ module tb_cpu;
         @ (posedge clk);
         $display("%s: CHECK", `__FILE__);
         if (addressM !== 16'h0AA1 || outM !== 16'h0AA1 || writeM !== 1) begin
-            $display("%s: ERROR: Output mismatch at time %0t", `__FILE__, $time);
+            $display("%s: FAIL: Output mismatch at time %0t", `__FILE__, $time);
             $finish;
         end
 
@@ -74,7 +74,7 @@ module tb_cpu;
         @ (posedge clk);
         $display("%s: CHECK", `__FILE__);
         if (addressM !== 16'h0AA2 || writeM !== 0) begin
-            $display("%s: ERROR: Output mismatch at time %0t", `__FILE__, $time);
+            $display("%s: FAIL: Output mismatch at time %0t", `__FILE__, $time);
             $finish;
         end
 		  
@@ -82,7 +82,7 @@ module tb_cpu;
         @ (posedge clk);
         $display("%s: CHECK", `__FILE__);
         if (addressM !== 16'h0AA1 || writeM !== 0) begin
-            $display("%s: ERROR: Output mismatch at time %0t", `__FILE__, $time);
+            $display("%s: FAIL: Output mismatch at time %0t", `__FILE__, $time);
             $finish;
         end
 		  
@@ -90,7 +90,7 @@ module tb_cpu;
         @ (posedge clk);
         $display("%s: CHECK", `__FILE__);
         if (addressM !== 16'h0AA2 || outM !== 16'h0AA2 || writeM !== 1) begin
-            $display("%s: ERROR: Output mismatch at time %0t", `__FILE__, $time);
+            $display("%s: FAIL: Output mismatch at time %0t", `__FILE__, $time);
             $finish;
         end
 		  
@@ -98,7 +98,7 @@ module tb_cpu;
         @ (posedge clk);
         $display("%s: CHECK", `__FILE__);
         if (addressM !== 16'h0005) begin
-            $display("%s: ERROR: Output mismatch at time %0t", `__FILE__, $time);
+            $display("%s: FAIL: Output mismatch at time %0t", `__FILE__, $time);
             $finish;
         end
 		  
@@ -109,7 +109,7 @@ module tb_cpu;
         @ (posedge clk);
         $display("%s: CHECK", `__FILE__);
         if (addressM !== 16'h0006 || writeM !== 0) begin
-            $display("%s: ERROR: Output mismatch at time %0t", `__FILE__, $time);
+            $display("%s: FAIL: Output mismatch at time %0t", `__FILE__, $time);
             $finish;
         end
 		  
@@ -117,7 +117,7 @@ module tb_cpu;
         @ (posedge clk);
         $display("%s: CHECK", `__FILE__);
         if (addressM !== 16'h0006 || pc !== 16'h0006) begin
-            $display("%s: ERROR: Output mismatch at time %0t", `__FILE__, $time);
+            $display("%s: FAIL: Output mismatch at time %0t", `__FILE__, $time);
             $finish;
         end
 		  

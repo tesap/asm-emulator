@@ -45,13 +45,13 @@ module tb_pc;
         @ (posedge clk);
         load = 0;
         if (out_data !== 16'hABCD) begin
-            $display("ERROR: Output mismatch at time %0t", $time);
+            $display("FAIL: Output mismatch at time %0t", $time);
             $finish;
         end
 
         @ (posedge clk);
         if (out_data !== 16'hABCD) begin
-            $display("ERROR: Output mismatch at time %0t", $time);
+            $display("FAIL: Output mismatch at time %0t", $time);
             $finish;
         end
 
@@ -63,7 +63,7 @@ module tb_pc;
         @ (posedge clk);
         load = 0;
         if (out_data !== 16'h1111) begin
-            $display("ERROR: Output mismatch at time %0t", $time);
+            $display("FAIL: Output mismatch at time %0t", $time);
             $finish;
         end
 
@@ -74,7 +74,7 @@ module tb_pc;
         @ (posedge clk);
         inc = 0;
         if (out_data !== 16'h1112) begin
-            $display("ERROR: Output mismatch at time %0t", $time);
+            $display("FAIL: Output mismatch at time %0t", $time);
             $finish;
         end
 
@@ -85,7 +85,7 @@ module tb_pc;
         @ (posedge clk);
         inc = 0;
         if (out_data !== 16'h1113) begin
-            $display("ERROR: Output mismatch at time %0t", $time);
+            $display("FAIL: Output mismatch at time %0t", $time);
             $finish;
         end
 

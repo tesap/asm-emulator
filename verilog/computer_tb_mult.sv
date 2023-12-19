@@ -1,20 +1,28 @@
 
+/*
+* Checks "test/mult.hack" that writes multiply of RAM[0] and RAM[1] to RAM[2]
+*/
+
 `include "computer.sv"
 
 `define assert(signal, value) \
     if (signal !== value) begin \
-        $display("ASSERTION FAILED in %m: signal != value; %d|%d", signal, value); \
+        $display("ASSERTION FAILED in %m: signal (%d) != value (%d)", signal, value); \
         $finish; \
     end
+
 //----------------------------------------------------------------------------
 // Testbench
 //----------------------------------------------------------------------------
 
-module tb_computer;
+module computer_tb_mult;
 
     parameter TIME_PERIOD = 10;
     parameter rom_size = 22;
     parameter ram_size = 32;
+    parameter rom_file = "test/hack/mult.hack";
+    parameter ram_init_file = "test/ram_mult_init.mem";
+    parameter ram_final_file = "test/ram_mult_final.mem";
 
     // Inputs
     logic clk;
@@ -23,7 +31,14 @@ module tb_computer;
     // Outputs
     logic ended;
 
-    computer #(.rom_size(rom_size), .ram_size(ram_size)) computer_dut (
+
+    computer #(
+        .rom_size(rom_size),
+        .ram_size(ram_size),
+        .rom_file(rom_file),
+        .ram_init_file(ram_init_file),
+        .ram_final_file(ram_final_file)
+    ) computer_dut (
         .*
     );
 
@@ -39,29 +54,27 @@ module tb_computer;
         reset = 1;
 
         // Setup input memory
-        
         if (a * b > 2 ** 16) begin
-            $display("%s: Too big values", `__FILE__);
+            $display("%s: FAIL: Too big values", `__FILE__);
             $finish;
         end
 
         ram_in[0] = a;
         ram_in[1] = b;
-        $writememb("ram_init.mem", ram_in);
+        $writememb(ram_init_file, ram_in);
           
         #TIME_PERIOD reset = 0;
 
+        // Run Computer
         // for (int i = 0; i < 100; i ++) begin
         while (!ended) begin
             @ (negedge clk);
         end
 
-        $readmemb("ram_final.mem", ram_out);
+        // Check final memory
+        $readmemb(ram_final_file, ram_out);
 
-        if (ram_out[2] !== a * b) begin
-            $display("%s: ERROR: %d * %d != %d", `__FILE__, a, b, ram_out[2]);
-            $finish;
-        end
+        `assert(ram_out[2], a * b);
 
         $display("%s: PASS", `__FILE__);
         $finish;

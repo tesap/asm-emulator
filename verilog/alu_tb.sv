@@ -47,11 +47,6 @@ module testbench;
 
     # 1;
 
-    $display ("TEST      x,      y, zx, nx, zy, ny, f, no");
-    $display ("TEST %d, %d,  %b,  %b,  %b,  %b, %b,  %b", x, y, zx, nx, zy, ny, f, no);
-    $display ("RES:             out, zr, ng");
-    $display ("RES:          %d, %b,  %b", out, zr, ng);
-
     if (out !== t_out || zr !== t_zr || ng !== t_ng)
         begin
             $display ("FAIL: EXPECTED %d, %b,  %b", t_out, t_zr, t_ng);

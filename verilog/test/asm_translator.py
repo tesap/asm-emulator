@@ -3,6 +3,8 @@
 import re, sys
 # Very simple symbol table for the assembler.
 
+SYMBOLS_ADDR = 16
+
 class SymbolTable(object):
     def __init__(self):
         # Predefined symbols equate to memory locations
@@ -256,7 +258,6 @@ class Code(object):
 class Assembler(object):
     def __init__(self):
         self.symbols = SymbolTable()
-        self.symbol_addr = 16
     
     # First pass: determine memory locations of label definitions: (LABEL)
     def pass0(self, file):
@@ -271,35 +272,39 @@ class Assembler(object):
                 self.symbols.add_entry( parser.symbol(), cur_address )
     
     # Second pass: generate code and write result to output file.
-    def pass1(self, infile, outfile):
+    def pass1(self, infile):
+        result = ""
+
         parser = Parser(infile)
-        outf = open( outfile, 'w' )
         code = Code()
         while parser.has_more_commands():
             parser.advance()
             cmd = parser.command_type()
             if cmd == parser.A_COMMAND:
-                outf.write( code.gen_a(self._get_address(parser.symbol())) + '\n' )
+                result += code.gen_a(self._get_address(parser.symbol())) + '\n'
             elif cmd == parser.C_COMMAND:
-                outf.write( code.gen_c(parser.dest(), parser.comp(), parser.jmp()) + '\n' )
+                result += code.gen_c(parser.dest(), parser.comp(), parser.jmp()) + '\n'
             elif cmd == parser.L_COMMAND:
                 pass
-        outf.close()
+
+        print(result)
     
     # Lookup an address - may be symbolic, or already numeric
     def _get_address(self, symbol):
+        global SYMBOLS_ADDR
+
         if symbol.isdigit():
             return symbol
         else:
             if not self.symbols.contains(symbol):
-                self.symbols.add_entry(symbol, self.symbol_addr)
-                self.symbol_addr += 1
+                self.symbols.add_entry(symbol, SYMBOLS_ADDR)
+                SYMBOLS_ADDR += 1
             return self.symbols.get_address(symbol)
     
     # Drive the assembly process
     def assemble(self, file):
         self.pass0( file )
-        self.pass1( file, self._outfile(file) )
+        self.pass1( file )
         
     def _outfile(self, infile):
         if infile.endswith( '.asm' ):
