@@ -1,0 +1,1 @@
+../../vm_translator/3-hack/mult.hack

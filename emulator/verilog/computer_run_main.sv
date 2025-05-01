@@ -1,6 +1,6 @@
 
 /*
-* Just runs "test/main.hack" without any checks
+* Just runs "../run/main.hack" without any checks
 */
 
 `include "computer.sv"
@@ -17,11 +17,12 @@
 module computer_run_main;
 
     parameter TIME_PERIOD = 10;
-    parameter rom_size = 45;
+    parameter rom_size = 211;
     parameter ram_size = 32;
-    parameter rom_file = "test/main.hack";
-    parameter ram_init_file = "test/ram_32_init.mem";
-    parameter ram_final_file = "test/ram_main_final.mem";
+    parameter rom_file = "../run/main.hack";
+    parameter ram_init_file = "../run/mem/ram_init_32.mem";
+    parameter ram_final_file = "../run/mem/ram_final_main.mem";
+
 
     integer i = 0;
 
@@ -52,7 +53,7 @@ module computer_run_main;
         clk = 0;
         reset = 1;
 
-        // $writememb(ram_init_file, ram_in);
+        $writememb(ram_init_file, ram_in);
 
         #TIME_PERIOD reset = 0;
 
@@ -62,10 +63,10 @@ module computer_run_main;
             @ (negedge clk);
             i += 1;
 
-            if (i >= 1000) begin
-                // $display("%s: FAIL: endless loop");
-                $finish;
-            end
+            // if (i >= 1000) begin
+            //     // $display("%s: FAIL: endless loop");
+            //     $finish;
+            // end
         end
 
         $display("%s: PASS (No checks)", `__FILE__);

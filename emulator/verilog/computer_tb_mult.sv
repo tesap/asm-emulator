@@ -20,9 +20,9 @@ module computer_tb_mult;
     parameter TIME_PERIOD = 10;
     parameter rom_size = 22;
     parameter ram_size = 32;
-    parameter rom_file = "test/hack/mult.hack";
-    parameter ram_init_file = "test/ram_mult_init.mem";
-    parameter ram_final_file = "test/ram_mult_final.mem";
+    parameter rom_file = "../run/mult.hack";
+    parameter ram_init_file = "../run/mem/ram_init_32.mem";
+    parameter ram_final_file = "../run/mem/ram_final_mult.mem";
 
     // Inputs
     logic clk;
